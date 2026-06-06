@@ -10,6 +10,9 @@ return [
     'ui' => [
         'skip_welcome' => true,
     ],
+    'dev' => [
+        'demo_images' => true,
+    ],
     'picture' => [
         'time_to_live' => 30,
     ],
