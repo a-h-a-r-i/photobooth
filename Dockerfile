@@ -29,8 +29,8 @@ RUN chown -R application:application /app
 # switch to application user
 USER application
 
-# Install and build
-RUN git config --global --add safe.directory /app \
-    && git submodule update --init \
-    && npm install \
-    && npm run build
+# Install and build (git not available in build context)
+RUN npm install \
+    && npm run build:gulp \
+    && echo 'render build' > HEAD \
+    && php bin/composer install --no-dev --optimize-autoloader
