@@ -1367,18 +1367,6 @@ const photoBooth = (function () {
             loader.removeClass('stage--active showBackgroundImage');
             loader.css('background-image', '');
 
-            // QR code disabled
-                qrWrapper.append(qrResultImage);
-
-                const qrShortText = config.qr.short_text;
-                if (qrShortText && qrShortText.length > 0) {
-                    const qrCaption = document.createElement('p');
-                    qrCaption.classList.add('stage-code__caption');
-                    qrCaption.textContent = qrShortText;
-                    qrWrapper.append(qrCaption);
-                }
-            }
-
             if (!filternav.hasClass('sidenav--open')) {
                 rotaryController.focusSet(resultPage);
             }
