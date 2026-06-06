@@ -29,7 +29,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Apache config
 RUN echo "LimitRequestLine 12000" > /etc/apache2/conf-available/limits.conf \
     && a2enconf limits \
-    && a2enmod rewrite
+    && a2enmod rewrite \
+    && sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf \
+    && printf '<Directory /var/www/html>\n    Options Indexes FollowSymLinks\n    AllowOverride All\n    Require all granted\n</Directory>\n' >> /etc/apache2/apache2.conf
 
 # Set document root
 ENV APACHE_DOCUMENT_ROOT /var/www/html
@@ -38,8 +40,9 @@ RUN sed -i 's|/var/www/html|/var/www/html|g' /etc/apache2/sites-available/000-de
 WORKDIR /var/www/html
 COPY . .
 
-# Create data dirs, fix permissions
+# Create data dirs, fix permissions, ensure data is web-accessible
 RUN mkdir -p data/images data/thumbs data/tmp data/keying data/qrcodes \
+    && printf 'Options -Indexes\nRequire all granted\n' > data/.htaccess \
     && mkdir -p .npm-cache .composer-cache \
     && touch welcome/.skip_welcome \
     && chown -R www-data:www-data /var/www/html \
