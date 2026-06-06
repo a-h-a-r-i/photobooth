@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         unzip \
         udisks2 \
     && docker-php-ext-configure gd --with-jpeg --with-webp \
-    && docker-php-ext-install gd zip exif \
+    && docker-php-ext-install gd zip exif ftp \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -40,20 +40,21 @@ COPY . .
 
 # Create data dirs, fix permissions
 RUN mkdir -p data/images data/thumbs data/tmp data/keying data/qrcodes \
-    && mkdir -p .npm-cache \
+    && mkdir -p .npm-cache .composer-cache \
     && touch welcome/.skip_welcome \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
     && chmod -R 777 data
 
 ENV NPM_CONFIG_CACHE=/var/www/html/.npm-cache
+ENV COMPOSER_HOME=/var/www/html/.composer-cache
 
 # Build as www-data
 USER www-data
 RUN npm install \
     && npm run build:gulp \
     && echo 'render build' > HEAD \
-    && composer install --no-dev --optimize-autoloader
+    && composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-ftp
 
 USER root
 EXPOSE 80
