@@ -11,9 +11,14 @@ return [
         'skip_welcome' => true,
     ],
     'dev' => [
-        'demo_images' => true,
+        'demo_images' => false,
     ],
     'picture' => [
         'time_to_live' => 30,
+    ],
+    'preview' => [
+        'mode'        => 'device_cam',
+        'camTakesPic' => true,
+        'flip'        => 'off',
     ],
 ];
