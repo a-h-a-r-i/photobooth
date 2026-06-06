@@ -619,11 +619,13 @@ body::before {
 .github-corner,
 .octo { display: none !important; }
 
+// Hide QR code everywhere
+.stage-code,
+[class*="stage-code"],
+.qr-code,
+[class*="qr-code"],
 .stage--start .stage-code,
-.stage--start .qr-code,
-.stage--start [class*="qr"] {
-  display: none !important;
-}
+.stage--result .stage-code { display: none !important; }
 
 .stage--start .preview,
 .stage--start #preview-container,

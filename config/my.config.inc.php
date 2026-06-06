@@ -21,4 +21,13 @@ return [
         'camTakesPic' => true,
         'flip'        => 'off',
     ],
+    'qr' => [
+        'enabled' => false,
+        'result'  => 'hidden',
+        'pswp'    => 'hidden',
+    ],
+    'database' => [
+        'enabled' => true,
+        'file'    => 'db',
+    ],
 ];
