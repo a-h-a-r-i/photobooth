@@ -3,6 +3,9 @@ bower_components/
 config/*
 !config/config.inc.php
 !config/tailwind.admin.config.js
+!config/tailwind.admin.config.mjs
+!config/my.config.inc.php
+# cloudinary.config.php is intentionally excluded (contains secrets)
 data/
 digicamcontrol/
 HEAD
@@ -10,6 +13,12 @@ manual/faq.*
 node_modules/
 private/*
 !private/README.md
+!private/sass/
+!private/sass/_custom.scss
+!private/CloudinaryUploader.php
+!private/cloudinary_upload_worker.php
+!private/api/
+!private/api/applyEffects.php
 resources/css/*
 !resources/css/README.md
 resources/js/*

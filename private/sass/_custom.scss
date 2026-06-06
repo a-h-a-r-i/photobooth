@@ -1,0 +1,636 @@
+// =============================================================
+// Photobooth – Scenic Background + Vintage Film Strip Theme
+// =============================================================
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&display=swap');
+
+// ─── Tokens ──────────────────────────────────────────────────
+:root {
+  --film-black:  #111110;
+  --film-strip:  #0f0f0e;
+  --film-hole:   #2c2c2a;
+  --film-frame:  #e8dcc8;
+  --film-text:   #ffffff;
+  --film-sepia:  sepia(0.3) saturate(0.9) brightness(0.95);
+
+  --primary-color:              transparent;
+  --primary-light-color:        transparent;
+  --secondary-color:            rgba(0,0,0,0.3);
+  --highlight-color:            #ffffff;
+  --border-color:               rgba(255,255,255,0.25);
+  --font-color:                 #ffffff;
+  --start-text-color:           #ffffff;
+  --button-font-color:          #ffffff;
+  --countdown-font-color:       #ffffff;
+  --background-countdown-color: rgba(0,0,0,0.75);
+
+  --button-border-radius: 0.25rem;
+  --button-border-width:  1px;
+  --button-border-color:  rgba(255,255,255,0.3);
+  --button-background:    rgba(255,255,255,0.15);
+  --button-focus-background: rgba(255,255,255,0.28);
+  --button-width:    3.8rem;
+  --button-height:   3.8rem;
+  --button-icon-size: 1.5rem;
+  --button-font-size: 0.58rem;
+  --button-gap:      0.3rem;
+  --button-direction: column;
+}
+
+@media (min-width: 480px) {
+  :root {
+    --button-width: 4.25rem;
+    --button-height: 4.25rem;
+    --button-icon-size: 1.75rem;
+    --button-font-size: 0.65rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --button-width: 5rem;
+    --button-height: 5rem;
+    --button-icon-size: 2rem;
+    --button-font-size: 0.72rem;
+  }
+}
+
+// ─── Global base ─────────────────────────────────────────────
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html { -webkit-font-smoothing: antialiased; }
+
+html, body {
+  background-color: #1a1208 !important;
+  background-image: url('https://res.cloudinary.com/diiii2qat/image/upload/v1780731935/anders-jilden-cYrMQA7a3Wc-unsplash_kxtnfa.jpg') !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  overscroll-behavior: none;
+}
+
+// Vignette over the photo background
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.52) 100%),
+    linear-gradient(to bottom,
+      rgba(0,0,0,0.3) 0%,
+      transparent 35%,
+      transparent 65%,
+      rgba(0,0,0,0.45) 100%);
+}
+
+// ─── Stage ───────────────────────────────────────────────────
+.stage {
+  position: relative;
+  z-index: 1;
+  background-color: transparent !important;
+  background-image: none !important;
+  padding: env(safe-area-inset-top,0) env(safe-area-inset-right,0)
+           env(safe-area-inset-bottom,0) env(safe-area-inset-left,0);
+}
+
+// ─── START STAGE ─────────────────────────────────────────────
+.stage--start {
+  background-color: transparent !important;
+  background-image: none !important;
+  display: flex !important;
+
+  .stage-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    gap: 0;
+    width: 100%;
+    height: 100%;
+    @media (min-width: 768px) { padding: 2rem 3rem; }
+  }
+
+  // ── Vertical "memories" text ─────────────────────────────
+  .names {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    padding: 0 0.5rem;
+    margin-right: 1.5rem;
+    background: none !important;
+    border: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    @media (min-width: 768px) { margin-right: 2.5rem; }
+  }
+
+  .names-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  h1.start-text {
+    font-family: 'Dancing Script', cursive !important;
+    font-size: clamp(3.5rem, 10vw, 7rem) !important;
+    font-weight: 700 !important;
+    line-height: 0.9 !important;
+    color: #ffffff !important;
+    text-shadow:
+      2px  2px 6px rgba(0,0,0,0.8),
+      0    0   20px rgba(0,0,0,0.6);
+    margin: 0;
+    background: none !important;
+    -webkit-text-fill-color: unset !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+  }
+
+  h2.start-text {
+    font-family: 'Dancing Script', cursive !important;
+    font-size: clamp(3rem, 9vw, 6rem) !important;
+    font-weight: 700 !important;
+    font-style: italic;
+    line-height: 0.9 !important;
+    color: rgba(245,201,122,0.95) !important;
+    -webkit-text-fill-color: rgba(245,201,122,0.95) !important;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    margin-top: 0.2rem;
+    background: none !important;
+    opacity: 1;
+  }
+
+  .event-text {
+    font-family: 'Dancing Script', cursive !important;
+    font-size: clamp(2rem, 7vw, 5rem) !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background: none !important;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+  }
+}
+
+// ─── Film strip (buttonbar) ───────────────────────────────────
+.stage--start .buttonbar {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+  background: var(--film-strip) !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 0.3rem;
+  width: clamp(110px, 34vw, 210px);
+  min-height: clamp(280px, 72vh, 580px);
+  padding: 1rem 0;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 0.5rem;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4);
+
+  @media (min-width: 480px)  { width: clamp(130px, 30vw, 220px); }
+  @media (min-width: 768px)  { width: clamp(150px, 25vw, 250px); }
+  @media (min-width: 1024px) { width: clamp(180px, 20vw, 280px); }
+}
+
+// Left sprocket track
+.stage--start .buttonbar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 20px;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px, transparent 5px,
+    var(--film-hole) 5px, var(--film-hole) 13px,
+    transparent 13px, transparent 20px
+  );
+  background-size: 20px 20px;
+  border-radius: 0.3rem 0 0 0.3rem;
+}
+
+// Right sprocket track
+.stage--start .buttonbar::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 20px;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px, transparent 5px,
+    var(--film-hole) 5px, var(--film-hole) 13px,
+    transparent 13px, transparent 20px
+  );
+  background-size: 20px 20px;
+  border-radius: 0 0.3rem 0.3rem 0;
+}
+
+// ─── Film frame buttons ───────────────────────────────────────
+.stage--start .button {
+  position: relative;
+  z-index: 2;
+  width: calc(100% - 46px) !important;
+  height: clamp(75px, 18vw, 135px) !important;
+  border-radius: 0.1rem;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  background: var(--film-frame) !important;
+  overflow: hidden;
+  flex-direction: row !important;
+  gap: 0.5rem;
+  margin: 0;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+
+  @media (min-width: 480px)  { height: clamp(90px, 20vw, 150px) !important; }
+  @media (min-width: 1024px) { height: clamp(110px, 16vw, 170px) !important; }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+      rgba(212,196,160,0.4) 0%,
+      rgba(180,155,110,0.2) 100%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .button--icon {
+    position: relative;
+    z-index: 1;
+    font-size: 1.5rem !important;
+    color: rgba(26,26,24,0.85) !important;
+    filter: none !important;
+  }
+
+  .button--label {
+    position: relative;
+    z-index: 1;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(26,26,24,0.75) !important;
+  }
+
+  &:hover, &:focus, &.focused {
+    transform: scale(1.04);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    &::before {
+      background: linear-gradient(135deg,
+        rgba(212,196,160,0.65) 0%,
+        rgba(180,155,110,0.4) 100%);
+    }
+  }
+
+  &:active { transform: scale(0.96); }
+}
+
+.stage--start .button[data-command='takePic'],
+.stage--start .button[data-command='takeCollage'],
+.stage--start .button[data-command='takeVideo'] {
+  background: #ddd0b0 !important;
+}
+
+// ─── Loader ───────────────────────────────────────────────────
+.stage--loader {
+  background-color: rgba(0,0,0,0.6) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  .stage-message {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.4rem, 5vw, 2.8rem);
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    animation: film-pulse 1.7s ease-in-out infinite;
+  }
+}
+
+@keyframes film-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+
+// ─── Countdown ────────────────────────────────────────────────
+.countdown {
+  background-color: rgba(0,0,0,0.6) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  &-number {
+    font-family: 'Dancing Script', cursive;
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff !important;
+    background: none !important;
+    background-clip: unset !important;
+    -webkit-background-clip: unset !important;
+    filter: none !important;
+    text-shadow: 0 0 40px rgba(245,201,122,0.8), 0 4px 16px rgba(0,0,0,0.8);
+  }
+}
+
+// ─── Result stage ─────────────────────────────────────────────
+.stage--result {
+  background-color: transparent !important;
+
+  &::before {
+    background-color: var(--film-strip) !important;
+  }
+
+  &::after {
+    filter: var(--film-sepia);
+  }
+
+  .buttonbar--bottom {
+    bottom: calc(1.5rem + env(safe-area-inset-bottom, 0));
+    background: rgba(15,15,14,0.85) !important;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: fit-content;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+.stage--result .button {
+  background: rgba(255,255,255,0.1) !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  color: #ffffff !important;
+  .button--icon  { color: #ffffff !important; }
+  .button--label { color: #ffffff !important; font-family: 'Playfair Display', serif; }
+  &:hover, &:focus, &.focused {
+    background: rgba(255,255,255,0.22) !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    transform: scale(1.08) translateY(-2px);
+  }
+}
+
+// ─── Gallery ──────────────────────────────────────────────────
+.gallery {
+  background: rgba(15,15,14,0.95) !important;
+
+  &-header {
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 1.25rem 1.5rem;
+  }
+
+  &-title h1 {
+    font-family: 'Dancing Script', cursive !important;
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    background: none !important;
+    -webkit-text-fill-color: unset !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+  }
+
+  &-body {
+    padding: 1rem;
+    @media (min-width: 480px)  { padding: 1.5rem; }
+    @media (min-width: 1024px) { padding: 2rem; }
+  }
+}
+
+.gallery-list {
+  --gallery-card-width-base: 140px;
+  gap: 0.75rem;
+  @media (min-width: 480px)  { --gallery-card-width-base: 165px; }
+  @media (min-width: 1024px) { --gallery-card-width-base: 205px; }
+
+  a {
+    border-radius: 0.1rem;
+    background: var(--film-frame);
+    border: 3px solid var(--film-strip);
+    box-shadow: 0 3px 14px rgba(0,0,0,0.5);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    &:hover, &:focus, &.focused {
+      transform: translateY(-4px) rotate(-0.5deg);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.6);
+    }
+  }
+
+  img { filter: var(--film-sepia); display: block; width: 100%; }
+
+  figcaption {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.68rem;
+    color: rgba(26,26,24,0.65);
+    background: var(--film-frame);
+    padding: 0.4rem 0.6rem;
+    text-align: center;
+  }
+}
+
+.gallery .button {
+  background: rgba(255,255,255,0.1) !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  .button--icon, .button--label { color: #ffffff !important; }
+}
+
+// ─── Misc ─────────────────────────────────────────────────────
+.button {
+  font-family: 'Playfair Display', serif;
+  transition: transform 0.15s ease, box-shadow 0.18s ease;
+  &:active { transform: scale(0.93); }
+}
+
+.adminshortcut {
+  opacity: 0.18;
+  transition: opacity 0.2s;
+  &:hover, &:focus { opacity: 0.9; }
+}
+
+.overlay {
+  background: rgba(0,0,0,0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.2rem, 5vw, 3rem);
+  font-weight: 700;
+}
+
+.stage-message {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.1rem, 4vw, 2.5rem);
+  color: #ffffff;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  max-width: calc(100% - 2rem);
+  width: auto;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cheese {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2.5rem, 10vw, 6rem);
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 30px rgba(245,201,122,0.9), 0 4px 12px rgba(0,0,0,0.8);
+}
+
+.stage-code {
+  background: var(--film-frame);
+  border: 3px solid var(--film-strip);
+  border-radius: 0.2rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+  width: clamp(6.5rem, 16vw, 9rem);
+  &__caption {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.55rem, 1.5vw, 0.8rem);
+    color: var(--film-black);
+  }
+}
+
+.logo {
+  max-width: min(140px, 28vw);
+  filter: brightness(0.95) drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+}
+
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; }
+
+// ─── Collage selector modal ───────────────────────────────────
+.modal {
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.modal-inner {
+  background: var(--film-frame);
+  border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 0.75rem;
+  max-width: min(520px, 94vw);
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.modal-body h3 {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.3rem, 4vw, 2rem);
+  color: var(--film-black);
+  text-align: center;
+  margin: 0 0 1rem;
+}
+
+.collageSelector__options {
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+  @media (min-width: 480px) { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}
+
+.collageSelector__option {
+  background: #fff;
+  border: 2px solid rgba(26,26,24,0.15);
+  border-radius: 0.5rem;
+  padding: 0.6rem;
+  color: var(--film-black);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 2px 8px rgba(26,26,24,0.12);
+  &:hover, &:focus, &.is-selected {
+    border-color: var(--film-black);
+    box-shadow: 0 4px 16px rgba(26,26,24,0.28);
+    transform: translateY(-2px) scale(1.03);
+  }
+}
+
+.collageSelector__preview-container {
+  background: rgba(26,26,24,0.05);
+  border-radius: 0.3rem;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+  padding: 0.3rem;
+}
+
+.collageSelector__label {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--film-black);
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+.collageSelector__option[data-layout="film-black"] .collageSelector__preview-container { background: #111110; }
+.collageSelector__option[data-layout="film-white"] .collageSelector__preview-container { background: #f5f0e8; }
+.collageSelector__option[data-layout="film-vintage"] .collageSelector__preview-container { background: #d4c4a0; }
+.collageSelector__option[data-layout="film-bwstripe"] .collageSelector__preview-container { background: #1a1a1a; }
+.collageSelector__option[data-layout="film-sage"] .collageSelector__preview-container { background: #a8a898; }
+
+.modal-buttonbar { border-top: 1px solid rgba(26,26,24,0.15); padding: 0.75rem 1rem; }
+
+.modal-button {
+  font-family: 'Playfair Display', serif;
+  background: var(--film-black);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.35rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  &:hover { opacity: 0.82; }
+  .modal-button--icon { margin-right: 0.35rem; }
+}
+
+// ─── Hide github corner + QR code on start ───────────────────
+.github-corner,
+.octo { display: none !important; }
+
+.stage--start .stage-code,
+.stage--start .qr-code,
+.stage--start [class*="qr"] {
+  display: none !important;
+}
+
+.stage--start .preview,
+.stage--start #preview-container,
+.stage--start #preview-wrapper,
+.stage--start #preview--video,
+.stage--start #preview--ipcam,
+.stage--start #preview--none {
+  display: none !important;
+  visibility: hidden !important;
+}

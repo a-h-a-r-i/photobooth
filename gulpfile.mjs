@@ -44,7 +44,7 @@ gulp.task('sass', async function () {
       const outputPath = path.join(outputDir, path.basename(file, '.scss') + '.css');
 
       const result = await compileAsync(inputPath, {
-        loadPaths: [scssDir],
+        loadPaths: [scssDir, '.'],
       });
 
       await writeFile(outputPath, result.css);

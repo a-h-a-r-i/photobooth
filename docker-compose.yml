@@ -3,8 +3,19 @@ version: "3.9"
 services:
   photobooth:
     build: .
+    user: root
+    entrypoint: >
+      bash -c "mkdir -p /app/data/images /app/data/thumbs /app/data/tmp /app/data/keying &&
+               chmod -R 777 /app/data &&
+               exec /entrypoint supervisord"
     ports:
-      - "80:80"
-      - "443:443"
+      - "8888:80"
+      - "8443:443"
     environment:
       - COMPOSER_VERSION=2
+    volumes:
+      - ./photos:/app/data/images
+      - ./thumbs:/app/data/thumbs
+      - ./config:/app/config
+      - ./src:/app/src
+      - ./private:/app/private
