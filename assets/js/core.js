@@ -1354,22 +1354,25 @@ const photoBooth = (function () {
             ? environment.publicFolders.api + '/qrcode.php?filename=' + filename
             : environment.publicFolders.images + '/' + filename;
 
-        const preloadImage = new Image();
-        preloadImage.onload = () => {
+        const showResult = () => {
             startPage.removeClass('stage--active');
-
             resultPage.css({
                 '--stage-background-image': `url(${imageUrl}?filter=${imgFilter})`
             });
             resultPage.attr('data-img', filename);
             resultPage.addClass('stage--active');
-
             loader.removeClass('stage--active showBackgroundImage');
             loader.css('background-image', '');
-
             if (!filternav.hasClass('sidenav--open')) {
                 rotaryController.focusSet(resultPage);
             }
+        };
+
+        const preloadImage = new Image();
+        preloadImage.onload = showResult;
+        preloadImage.onerror = () => {
+            photoboothTools.console.log('Image preload failed, showing result anyway:', imageUrl);
+            showResult();
         };
 
         preloadImage.src = imageUrl;
