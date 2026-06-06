@@ -1266,9 +1266,8 @@ const photoBooth = (function () {
     };
 
     api.showQrCode = function (filename) {
-        if (!config.qr.enabled) {
-            return;
-        }
+        // QR code disabled
+        return;
 
         photoboothTools.modal.open();
         const body = photoboothTools.modal.element.querySelector('.modal-body');
@@ -1368,22 +1367,7 @@ const photoBooth = (function () {
             loader.removeClass('stage--active showBackgroundImage');
             loader.css('background-image', '');
 
-            if (config.qr.enabled && config.qr.result != 'hidden') {
-                if (document.getElementById('resultQR')) {
-                    document.getElementById('resultQR').remove();
-                }
-                const qrWrapper = document.createElement('div');
-                qrWrapper.id = 'resultQR';
-                qrWrapper.setAttribute('class', 'stage-code ' + config.qr.result);
-
-                const qrResultImage = document.createElement('img');
-                qrResultImage.addEventListener('load', () => {
-                    resultPage.append(qrWrapper);
-                });
-
-                qrResultImage.src = environment.publicFolders.api + '/qrcode.php?filename=' + filename;
-                qrResultImage.alt = 'QR-Code';
-                qrResultImage.classList.add('stage-code__image');
+            // QR code disabled
                 qrWrapper.append(qrResultImage);
 
                 const qrShortText = config.qr.short_text;
