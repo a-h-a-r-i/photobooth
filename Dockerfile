@@ -1,7 +1,6 @@
 FROM webdevops/php-apache:8.4
 
-# Adjust LimitRequestLine and
-# update and install dependencies
+# Adjust LimitRequestLine and install dependencies
 RUN echo "LimitRequestLine 12000" > /opt/docker/etc/httpd/conf.d/limits.conf \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get update \
@@ -24,12 +23,16 @@ RUN echo "LimitRequestLine 12000" > /opt/docker/etc/httpd/conf.d/limits.conf \
 WORKDIR /app
 COPY . .
 
-RUN chown -R application:application /app
+# Create data dirs, set permissions, skip welcome — all as root before switching user
+RUN mkdir -p /app/data/images /app/data/thumbs /app/data/tmp /app/data/keying /app/data/qrcodes \
+    && chown -R application:application /app \
+    && chmod -R 777 /app/data \
+    && touch /app/welcome/.skip_welcome
 
-# switch to application user
+# Switch to application user (required by Render — no root at runtime)
 USER application
 
-# Install and build (git not available in build context)
+# Install and build
 RUN npm install \
     && npm run build:gulp \
     && echo 'render build' > HEAD \
