@@ -72,7 +72,7 @@ html, body {
   overscroll-behavior: none;
 }
 
-// Vignette over the photo background
+// Vignette over the photo background - hide during capture
 body::before {
   content: '';
   position: fixed;
@@ -86,6 +86,11 @@ body::before {
       transparent 35%,
       transparent 65%,
       rgba(0,0,0,0.45) 100%);
+}
+
+.stage--loader ~ body::before,
+body:has(.stage--loader.stage--active)::before {
+  display: none !important;
 }
 
 // ─── Stage ───────────────────────────────────────────────────

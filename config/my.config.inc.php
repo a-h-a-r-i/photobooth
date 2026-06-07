@@ -26,6 +26,9 @@ return [
         'result'  => 'hidden',
         'pswp'    => 'hidden',
     ],
+    'logo' => [
+        'enabled' => false,
+    ],
     'database' => [
         'enabled' => true,
         'file'    => 'db',
